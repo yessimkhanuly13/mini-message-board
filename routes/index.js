@@ -4,7 +4,6 @@ const messages = require('../messages');
 
 router.use((req, res, next)=>{
     console.log('Time: ', Date.now());
-    express.json();
     next()
 })
 
@@ -13,7 +12,16 @@ router.get('/', (req, res)=>{
 })
 
 router.post('/new', (req, res)=>{
-    console.log(req.body);
+    const name  = req.body.name;
+    const msg = req.body.message;
+    const data = {
+        text:msg, 
+        user:name, 
+        added: new Date()
+    };
+    messages.push(data);
+    console.log(messages);
+    res.redirect('/');
 })
 
 module.exports = router;
